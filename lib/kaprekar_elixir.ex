@@ -31,19 +31,18 @@ defmodule KaprekarElixir do
   def prove(@kaprekars_constant, iterarions), do: iterarions
 
   def prove(number, iterarions) do
+    if number > 9999 or number < 1 do
+      raise "invalid number"
+    end
+
     number
     |> tap(&IO.puts("Testing number: #{&1}"))
     |> Integer.to_string()
     |> String.pad_leading(4, "0")
-    |> to_integer_list()
-    |> difference()
-    |> prove(iterarions + 1)
-  end
-
-  defp to_integer_list(string) do
-    string
     |> String.codepoints()
     |> Enum.map(&String.to_integer/1)
+    |> difference()
+    |> prove(iterarions + 1)
   end
 
   defp descend(number_list) do
